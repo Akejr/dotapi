@@ -316,3 +316,10 @@
     opacity: 1;
   }
 }
+
+/* The mobile hero shader mounts after hydration, so it eases in rather than pops. */
+@keyframes dot-fade-in {
+  from {
+    opacity: 0;
+  }
+}

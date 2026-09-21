@@ -41,13 +41,13 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
       title: seo.home.title,
       description: seo.home.description,
       locale: meta.ogLocale,
-      images: ogImages(`${brand.name} — ${meta.tagline}`),
+      images: ogImages(`${brand.name}: ${meta.tagline}`),
     },
     twitter: {
       card: 'summary_large_image',
       title: seo.home.title,
       description: seo.home.description,
-      images: ogImages(`${brand.name} — ${meta.tagline}`),
+      images: ogImages(`${brand.name}: ${meta.tagline}`),
     },
     robots: pageRobots,
   };

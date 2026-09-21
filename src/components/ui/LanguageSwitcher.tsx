@@ -55,7 +55,7 @@ export function LanguageSwitcher({
             )}
           >
             {option.locale}
-            <span className="sr-only"> — {option.name}</span>
+            <span className="sr-only">, {option.name}</span>
           </Link>
         );
       })}

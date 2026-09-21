@@ -12,11 +12,11 @@ const base =
   'duration-200 ease-out active:translate-y-px disabled:pointer-events-none disabled:opacity-60';
 
 const variants: Record<Variant, string> = {
-  /* Solid brand green with ink text — every primary action in the design. */
+  /* Solid brand blue with ink text: every primary action in the design. */
   primary:
     'bg-brand text-ink shadow-[0_10px_30px_-12px_color-mix(in_oklab,var(--color-brand)_75%,transparent)] ' +
     'hover:bg-brand-bright hover:shadow-[0_14px_36px_-12px_color-mix(in_oklab,var(--color-brand)_85%,transparent)]',
-  /* Green hairline pill with green label — the secondary action in both design files. */
+  /* Blue hairline pill with a blue label: the secondary action in both design files. */
   outline: 'border border-brand/45 text-brand hover:border-brand hover:bg-brand/10',
   ghost: 'text-heading hover:text-brand-deep',
 };

@@ -4,6 +4,10 @@ import type { SiteContent } from '@/content/types';
  * English copy. DOT already operates Angola's largest digital payments platform,
  * so this page speaks to companies outside Angola who want to sell into the
  * market without setting up locally.
+ *
+ * House style: short sentences, one idea each. Active voice, second person.
+ * Benefit first, mechanism second. No em dashes; where an aside is worth keeping
+ * it becomes its own sentence, or a colon introduces the list.
  */
 export const en: SiteContent = {
   meta: {
@@ -12,7 +16,7 @@ export const en: SiteContent = {
     languageName: 'English',
     tagline: 'Sell in Angola. Get paid globally.',
     description:
-      "DOT is Angola's largest digital payments platform. Connect once to our API to accept Multicaixa Express and Bank Reference from millions of Angolan customers, and settle globally in the currency you choose.",
+      "DOT is Angola's largest digital payments platform. One API lets you accept Multicaixa Express and Bank Reference, then settle in the currency you choose.",
     keywords: [
       'Angola payments API',
       'Angola payment gateway',
@@ -29,11 +33,11 @@ export const en: SiteContent = {
 
   seo: {
     home: {
-      /* 53 chars. Leads with the query, keeps the brand as the tail. */
-      title: 'Angola Payments API — Multicaixa Express | DOT',
-      /* 141 chars. Names the methods, the settlement, and the main objection. */
+      /* 47 chars. Leads with the query, keeps the brand as the tail. */
+      title: 'Angola Payments API for Multicaixa Express | DOT',
+      /* 138 chars. Names the methods, the settlement, and the main objection. */
       description:
-        'Accept Multicaixa Express and Bank Reference from Angolan customers through one API, and settle in EUR, USD or BRL. No local entity needed.',
+        'Accept Multicaixa Express and Bank Reference from Angolan customers with one API. Settle in EUR, USD or BRL. No company in Angola required.',
     },
     documentation: {
       title: 'Payments API Documentation for Angola | DOT',
@@ -42,34 +46,34 @@ export const en: SiteContent = {
     },
     serviceName: 'DOT Payments API for Angola',
     serviceDescription:
-      'Payment processing for companies outside Angola: accept Multicaixa Express and Bank Reference locally through a single API integration, with settlement in the currency of your choice.',
+      'Payment processing for companies outside Angola. Accept Multicaixa Express and Bank Reference through one API integration, and settle in the currency of your choice.',
     methodNames: ['Multicaixa Express', 'Bank Reference'],
   },
 
   a11y: {
     skipToContent: 'Skip to content',
-    home: 'DOT — home',
+    home: 'DOT home page',
     mainNav: 'Main',
     footerNav: 'Footer',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
     languageSwitcher: 'Language',
     dashboardAlt:
-      'The DOT dashboard: total volume, Angola revenue, the next settlement date and a list of recent Multicaixa Express and Bank Reference payments.',
+      'The DOT dashboard showing total volume, Angola revenue, the next settlement date and recent Multicaixa Express and Bank Reference payments.',
   },
 
   /* Sections of this page only, in the order they appear. */
   nav: [
-    { label: 'How it works', href: '#how-it-works' },
-    { label: 'Product', href: '#product' },
+    { label: 'How it works', href: '#product' },
     { label: 'Benefits', href: '#benefits' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' },
   ],
 
   hero: {
     /* The two halves of the DOT tagline, exactly as they appear in the logo. */
     headline: { first: 'Sell in Angola.', second: 'Get paid globally.' },
-    body: "DOT is Angola's largest digital payments platform. Connect once to our API to accept the methods Angolans already use — Multicaixa Express and Bank Reference — and settle in the currency you choose.",
+    body: "DOT is Angola's largest digital payments platform. Connect once to our API and accept Multicaixa Express and Bank Reference. You settle in the currency you choose.",
     primaryCta: { label: 'Get API access', href: '#contact' },
     secondaryCta: { label: 'View documentation', href: '/documentation' },
     assurances: ['Local payment methods', 'Global settlements', 'Licensed in Angola'],
@@ -95,7 +99,7 @@ export const en: SiteContent = {
   },
 
   capabilities: {
-    heading: "One integration to reach\nAngola's payment market",
+    heading: 'One integration to reach\nAngola’s payment market',
     body: 'DOT already runs the local infrastructure. You connect once and start selling.',
     items: [
       {
@@ -123,10 +127,10 @@ export const en: SiteContent = {
 
   benefits: {
     heading: 'Built for global businesses\nthat want to grow in Angola',
-    body: "Whether you're an e-commerce store, a SaaS platform, an education company or a digital service, DOT gives you the local rails — methods, licensing, reconciliation and settlement — without opening a company in Angola.",
+    body: 'Sell to Angola without setting up in Angola. E-commerce, SaaS, education or digital services: DOT provides the local methods, the licensing, the reconciliation and the settlement. Your team just ships product.',
     items: [
       'Reach millions of customers in Angola',
-      'Increase your conversion rates',
+      'Convert more with the methods buyers trust',
       'Settle in your currency, not Kwanza',
       'A local team behind every transaction',
     ],
@@ -208,32 +212,32 @@ export const en: SiteContent = {
       {
         question: 'How can a company outside Angola accept payments from Angolan customers?',
         answer:
-          'Through the DOT API. You integrate once, your customers pay with the local methods they already use — Multicaixa Express or a Bank Reference — and DOT settles the funds to you in the currency you choose. You do not need to register a company in Angola.',
+          'Through the DOT API. You integrate once. Your customers pay with Multicaixa Express or a Bank Reference, the methods they already use. DOT settles the funds to you in the currency you choose. You do not need to register a company in Angola.',
       },
       {
         question: 'What is Multicaixa Express?',
         answer:
-          "Multicaixa Express is the mobile payment app used across Angola, built on the country's Multicaixa network. The customer approves the payment on their phone. It is one of the two local methods available through the DOT API.",
+          'Multicaixa Express is the mobile payment app used across Angola, built on the country’s Multicaixa network. The customer approves the payment on their phone. It is one of the two local methods available through the DOT API.',
       },
       {
         question: 'What is a Bank Reference payment?',
         answer:
-          'The customer receives a reference number and pays it through their bank — at an ATM, at the counter or in their banking app. It is widely used in Angola by customers who prefer to pay from a bank account rather than with a card or an app.',
+          'The customer receives a reference number and pays it through their bank, at an ATM, at the counter or in their banking app. It is widely used in Angola by customers who prefer paying from a bank account rather than with a card.',
       },
       {
         question: 'Do I need a company registered in Angola to use DOT?',
         answer:
-          'No. DOT holds the local licensing and runs the local infrastructure, so you can sell into Angola as a foreign company. Your integration is with the DOT API, and settlement reaches you abroad.',
+          'No. DOT holds the local licensing and runs the local infrastructure. You sell into Angola as a foreign company, integrate with the DOT API, and receive settlement abroad.',
       },
       {
         question: 'Which currencies can I settle in?',
         answer:
-          'EUR, USD and BRL are supported, along with other currencies on request. Your customers pay in Kwanza and you receive in the currency you chose, so no Kwanza balance sits on your books.',
+          'EUR, USD and BRL are supported, and other currencies on request. Your customers pay in Kwanza. You receive the currency you chose, so no Kwanza balance sits on your books.',
       },
       {
         question: 'Can I test the integration before going live?',
         answer:
-          'Yes. The sandbox mirrors production, including the Multicaixa Express and Bank Reference flows, so your developers can take a payment end to end before any real money moves.',
+          'Yes. The sandbox mirrors production, including the Multicaixa Express and Bank Reference flows. Your developers can take a payment end to end before any real money moves.',
       },
       {
         question: 'How do I get access to the API?',
@@ -243,14 +247,14 @@ export const en: SiteContent = {
       {
         question: 'What kinds of business use DOT?',
         answer:
-          'E-commerce, education, streaming, SaaS, gaming and digital services — any company selling to Angolan customers that wants local payment methods without local operations.',
+          'E-commerce, education, streaming, SaaS, gaming and digital services. Any company selling to Angolan customers that wants local payment methods without local operations.',
       },
     ],
   },
 
   contact: {
-    heading: "Let's grow\ntogether",
-    body: 'Tell us about your business and our team will get in touch to set up your API access and walk you through going live in Angola.',
+    heading: 'Let’s grow\ntogether',
+    body: 'Tell us about your business. Our team will get in touch to set up your API access and walk you through going live in Angola.',
     fields: {
       company: 'Company name',
       name: 'Your name',
@@ -304,7 +308,7 @@ export const en: SiteContent = {
   docs: {
     eyebrow: 'Developers',
     heading: { first: 'Integrate once.', second: 'Get paid globally.' },
-    body: 'The full developer documentation is shared with your team during onboarding, along with sandbox credentials. Here is what it covers — get in touch and we will send your keys.',
+    body: 'The full developer documentation is shared with your team during onboarding, along with sandbox credentials. Here is what it covers. Get in touch and we will send your keys.',
     primaryCta: 'Request API access',
     secondaryCta: 'Back to home',
     snippetCaption:
@@ -325,9 +329,9 @@ export const en: SiteContent = {
         title: 'API reference',
         body: 'A REST API over HTTPS with predictable resources and idempotent writes. Create a payment, watch it settle, and reconcile against your balances and settlements.',
         points: [
-          'Payments — create, retrieve and list local payments',
-          'Balances — funds held per currency',
-          'Settlements — payouts in EUR, USD, BRL and more',
+          'Payments: create, retrieve and list local payments',
+          'Balances: funds held per currency',
+          'Settlements: payouts in EUR, USD, BRL and more',
         ],
       },
       {

@@ -14,7 +14,7 @@ import { cn } from '@/lib/cn';
  */
 export function PaymentFlow({ flow }: { flow: SiteContent['paymentFlow'] }) {
   return (
-    <div id="how-it-works" className="relative scroll-mt-28">
+    <div className="relative">
       {/* Blue bloom behind the rail */}
       <div
         aria-hidden="true"

@@ -12,7 +12,7 @@ export default function manifest(): MetadataRoute.Manifest {
   const { meta, seo } = getContent(defaultLocale);
 
   return {
-    name: `${brand.name} — ${meta.tagline}`,
+    name: `${brand.name}: ${meta.tagline}`,
     short_name: brand.name,
     description: seo.home.description,
     start_url: `/${defaultLocale}`,

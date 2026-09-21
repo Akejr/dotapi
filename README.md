@@ -108,6 +108,40 @@ pages absent from the sitemap.
 > inherited from the layout. Every page now builds its card through
 > `ogImages()` in `src/lib/seo.ts`, with an absolute URL.
 
+## Copy
+
+`src/lib/brand.ts` is the single source for the live host
+(`business.dotangola.com`) and the contact address
+(`evandrocasanova@dotangola.com`). Canonicals, the sitemap, `robots.txt`, Open
+Graph tags, JSON-LD and the documentation mailto all read from it.
+
+House style: **no em dashes in visitor-facing copy.** Use a colon for an aside,
+or split the sentence. Sentences are short, voice is active, and every section
+leads with the benefit before the mechanism. The rule applies to
+`src/content/*.ts` and component strings; code comments are unaffected.
+
+## The hero
+
+Desktop and mobile show different things, because the desktop diagram does not
+survive the narrower column.
+
+- The currency flow diagram (`PaymentFlow`) is **desktop only**. Its section id
+  was removed along with it, so the header's "How it works" points at
+  `#product`, a link that exists at every breakpoint.
+- **Mobile only**, a WebGL noise field sits behind the hero:
+  `src/components/ui/ShaderBackground.tsx`, mounted by
+  `src/components/sections/HeroShader.tsx` at `opacity-45` with `screen`
+  blending and a mask that fades it out before the fold ends.
+
+The gating is done in JS with `matchMedia`, not with `lg:hidden`, so desktop
+never creates a GL context at all. `prefers-reduced-motion` skips it entirely,
+the canvas is capped at 1.2 megapixels, and shader compile and link status are
+checked before the first frame. Pointer tracking was dropped from the original
+effect: a `pointermove` listener earns nothing on a touch device.
+
+Adapted from [Paper Shaders](https://github.com/paper-design/shaders)
+(Apache-2.0).
+
 ## Brand assets
 
 `scripts/build-assets.ps1` derives everything the site serves from the design
@@ -153,8 +187,6 @@ Upstash, Vercel KV) before relying on it across multiple instances.
 
 ## Before going live
 
-- [ ] Replace the placeholders in `src/lib/brand.ts` — `url` and `contactEmail`
-      feed the canonical URLs, sitemap, robots.txt, Open Graph tags and JSON-LD
 - [ ] Configure `CONTACT_WEBHOOK_URL`
 - [ ] Confirm the Portuguese tagline — "Venda em Angola. Receba globalmente."
       is a translation, not an approved brand line
