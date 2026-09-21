@@ -1,0 +1,16 @@
+# Normalise text to LF in the repository and check out with native endings,
+# so the same file does not show as modified on Windows and Linux.
+* text=auto
+
+# Binary assets — never touch these.
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+
+# Windows-only tooling reads better with CRLF locally.
+*.ps1 text eol=crlf
+
+# Keep the lockfile out of diffs and language stats.
+package-lock.json -diff linguist-generated

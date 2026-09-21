@@ -1,0 +1,318 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   DOT design tokens
+
+   Every colour is sampled from the brand artwork in "Novos assets":
+     Logo.png      white wordmark, bolt gradient #00C4FC -> #007EFB,
+                   tagline blue #01A1FB
+     World.png     brand navy #001330, Angola highlight #08C4FD
+     Dashboard.png surfaces #001631 / #041B35 / #00142C, active nav #0041A7,
+                   Paid badge #023B6D on #09C0FF, positive delta green
+   ========================================================================== */
+@theme {
+  --font-sans:
+    var(--font-poppins), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Dark surfaces — the brand navy family */
+  --color-ink: #001330;
+  --color-ink-deep: #000c22;
+  --color-ink-raised: #041b35;
+  --color-ink-panel: #001631;
+  --color-ink-card: #041b35;
+  --color-ink-sunken: #00142c;
+  --color-ink-line: #072747;
+
+  /* Brand blues, straight off the lightning bolt */
+  --color-brand: #00a1fb;
+  --color-brand-bright: #00c4fc;
+  --color-brand-glow: #09c0ff;
+  --color-brand-blue: #007efb;
+  --color-brand-strong: #0041a7;
+  /* Darkened for AA contrast when blue sits on a light surface */
+  --color-brand-deep: #0b62d6;
+  --color-brand-ink: #023b6d;
+
+  /* Positive change indicator in the dashboard */
+  --color-positive: #00e39b;
+
+  /* Light surfaces */
+  --color-paper: #fbfdff;
+  --color-paper-soft: #f8fbff;
+  --color-mist: #e8f4ff;
+  --color-mist-line: #d3e7fa;
+
+  /* Text */
+  --color-heading: #051426;
+  --color-body: #46566b;
+  --color-subtle: #62748a;
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: #a9c3e0;
+
+  /* Radii used across the UI */
+  --radius-card: 1.125rem;
+  --radius-panel: 1.5rem;
+  --radius-tile: 0.875rem;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   Page measure
+   A 4.16% gutter (60px at a 1440 viewport) against a 1440px cap.
+   `--page-gutter` is the same distance measured from the viewport edge, so
+   full-bleed panels can align their copy with the centred container.
+   ========================================================================== */
+:root {
+  --page-max: 1440px;
+  --page-pad: clamp(1.25rem, 4.16vw, 3.75rem);
+  --page-gutter: max(var(--page-pad), calc((100vw - var(--page-max)) / 2 + var(--page-pad)));
+}
+
+/* ==========================================================================
+   Type scale
+   Each ramp is pinned to the value measured at a 390px viewport and again at
+   1440px, so the type tracks the layout the way the design files do.
+   ========================================================================== */
+@utility text-display {
+  font-size: clamp(1.75rem, 1.82rem + 2.14vw, 3.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+@utility text-h2 {
+  font-size: clamp(1.5rem, 1.47rem + 1.14vw, 2.4rem);
+  line-height: 1.22;
+  letter-spacing: -0.03em;
+}
+
+@utility text-h3 {
+  font-size: clamp(1rem, 0.946rem + 0.48vw, 1.375rem);
+  line-height: 1.32;
+  letter-spacing: -0.02em;
+}
+
+@utility text-lead {
+  font-size: clamp(1rem, 0.993rem + 0.29vw, 1.25rem);
+  line-height: 1.6;
+}
+
+@utility text-body-base {
+  font-size: clamp(0.9375rem, 0.911rem + 0.24vw, 1.125rem);
+  line-height: 1.6;
+}
+
+@utility text-body-sm {
+  font-size: clamp(0.9375rem, 0.914rem + 0.1vw, 1rem);
+  line-height: 1.6;
+}
+
+@utility text-mini {
+  font-size: clamp(0.875rem, 0.871rem + 0.14vw, 1rem);
+  line-height: 1.5;
+}
+
+@utility text-stat {
+  font-size: clamp(1.75rem, 1.425rem + 1.33vw, 2.625rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Sticky header height, so in-page anchors are not hidden behind it. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper-soft);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-feature-settings: 'kern';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-heading);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  /* A single, consistent focus treatment that stays visible on both themes. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-brand) 28%, transparent);
+    color: var(--color-heading);
+  }
+
+  /* Firefox needs the colour set explicitly to match the design's placeholders. */
+  ::placeholder {
+    color: var(--color-subtle);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   Composite surfaces
+   ========================================================================== */
+
+/* Hero / footer field: brand navy lifted by two soft blue blooms. */
+@utility surface-ink {
+  background-color: var(--color-ink);
+  background-image:
+    radial-gradient(
+      80rem 40rem at 78% -10%,
+      color-mix(in oklab, var(--color-brand) 16%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      45rem 30rem at 8% 0%,
+      color-mix(in oklab, var(--color-brand-blue) 10%, transparent),
+      transparent 65%
+    );
+}
+
+/* Translucent card on a dark field: 1px hairline plus a top inner highlight. */
+@utility card-on-ink {
+  background-color: color-mix(in oklab, var(--color-ink-card) 88%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-brand) 18%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--color-brand) 14%, transparent),
+    0 24px 60px -30px rgb(0 0 0 / 0.9);
+}
+
+/* Inner row inside a dark card (payment method / currency rows). */
+@utility row-on-ink {
+  background-color: color-mix(in oklab, #ffffff 6%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-brand) 16%, transparent);
+}
+
+/* Dotted connectors of the hero flow diagram. */
+@utility connector-x {
+  background-image: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--color-brand) 65%, transparent) 0 45%,
+    transparent 45% 100%
+  );
+  background-size: 9px 100%;
+  background-repeat: repeat-x;
+}
+
+@utility connector-y {
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--color-brand) 65%, transparent) 0 45%,
+    transparent 45% 100%
+  );
+  background-size: 100% 9px;
+  background-repeat: repeat-y;
+}
+
+/* The bolt gradient, for text that should carry the brand ramp. */
+@utility text-gradient-brand {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-brand-bright),
+    var(--color-brand) 45%,
+    var(--color-brand-blue)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ==========================================================================
+   Scroll reveal — opt-in, driven by IntersectionObserver in <Reveal />.
+   Content is visible by default so it never depends on JS to be readable.
+   ========================================================================== */
+@layer components {
+  .reveal {
+    opacity: 1;
+  }
+
+  /*
+   * Only hide up-front when we know JS is running and motion is welcome.
+   * The flag is a data attribute rather than a class: React renders `className`
+   * on <html>, so touching it from the pre-hydration script would produce a
+   * hydration mismatch. React does not manage `data-reveal`, so it is safe.
+   */
+  [data-reveal='on'] .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s var(--ease-out-soft),
+      transform 0.7s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  [data-reveal='on'] .reveal[data-visible='true'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal='on'] .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Dots drift along the hero connectors to suggest the direction of the money. */
+@keyframes dot-flow-x {
+  to {
+    background-position-x: 9px;
+  }
+}
+
+@keyframes dot-flow-y {
+  to {
+    background-position-y: 9px;
+  }
+}
+
+@keyframes dot-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
