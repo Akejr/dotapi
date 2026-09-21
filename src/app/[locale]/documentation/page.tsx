@@ -6,6 +6,8 @@ import { Container } from '@/components/ui/Container';
 import { getContent, isLocale, localePath } from '@/content';
 import { locales } from '@/content/types';
 import { brand } from '@/lib/brand';
+import { languageAlternates, ogImages, pageRobots } from '@/lib/seo';
+import { documentationGraph, serialiseGraph } from '@/lib/structured-data';
 
 type LocaleParams = { params: Promise<{ locale: string }> };
 
@@ -17,24 +19,31 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
   const { locale } = await params;
   if (!isLocale(locale)) return {};
 
-  const { docs, meta } = getContent(locale);
-  const languages: Record<string, string> = {};
-  for (const other of locales) {
-    languages[getContent(other).meta.htmlLang] = localePath(other, '/documentation');
-  }
+  const { meta, seo } = getContent(locale);
 
   return {
-    title: locale === 'pt' ? 'Documentação' : 'Documentation',
-    description: docs.body,
+    title: { absolute: seo.documentation.title },
+    description: seo.documentation.description,
     alternates: {
       canonical: localePath(locale, '/documentation'),
-      languages: { ...languages, 'x-default': '/documentation' },
+      languages: languageAlternates('/documentation'),
     },
     openGraph: {
-      title: `${brand.name} — ${docs.eyebrow}`,
-      description: docs.body,
+      type: 'article',
+      url: localePath(locale, '/documentation'),
+      siteName: brand.name,
+      title: seo.documentation.title,
+      description: seo.documentation.description,
       locale: meta.ogLocale,
+      images: ogImages(`${brand.name} — ${seo.documentation.title}`),
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: seo.documentation.title,
+      description: seo.documentation.description,
+      images: ogImages(`${brand.name} — ${seo.documentation.title}`),
+    },
+    robots: pageRobots,
   };
 }
 
@@ -53,10 +62,16 @@ const SNIPPET = `curl https://api.dot.ao/v1/payments \\
 export default async function DocumentationPage({ params }: LocaleParams) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  const { docs } = getContent(locale);
+  const content = getContent(locale);
+  const { docs } = content;
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serialiseGraph(documentationGraph(content, locale)) }}
+      />
+
       <section className="surface-ink pt-[104px] pb-16 lg:pt-[150px] lg:pb-20">
         <Container>
           <p className="text-[0.8125rem] font-semibold tracking-[0.14em] text-brand uppercase">

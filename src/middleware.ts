@@ -20,7 +20,13 @@ export function middleware(request: NextRequest) {
 
   const url = request.nextUrl.clone();
   url.pathname = `/${defaultLocale}${pathname === '/' ? '' : pathname}`;
-  return NextResponse.redirect(url);
+
+  /*
+   * 308, not the default 307. Sending English is a permanent structural decision,
+   * so crawlers should consolidate signals onto the target and stop re-checking
+   * the bare path. 308 also guarantees the method is preserved.
+   */
+  return NextResponse.redirect(url, 308);
 }
 
 export const config = {

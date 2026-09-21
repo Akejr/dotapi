@@ -31,6 +31,22 @@ export type DashboardIcon =
 
 export type ContactFieldName = 'company' | 'name' | 'email' | 'businessType' | 'message';
 
+/**
+ * Search-facing copy, deliberately separate from the on-page copy.
+ *
+ * The hero says "Sell in Angola. Get paid globally." — that is brand voice and it
+ * belongs on the page. It is useless in a <title>, because nobody searches for
+ * it. These strings target what a company outside Angola actually types into
+ * Google, and are length-budgeted so neither gets truncated in the result:
+ * titles <= 60 characters, descriptions 70-160.
+ */
+export type PageSeo = {
+  title: string;
+  description: string;
+};
+
+export type FaqItem = { question: string; answer: string };
+
 export type SiteContent = {
   /** Document-level metadata. */
   meta: {
@@ -43,6 +59,16 @@ export type SiteContent = {
     tagline: string;
     description: string;
     keywords: string[];
+  };
+
+  seo: {
+    home: PageSeo;
+    documentation: PageSeo;
+    /** Plain-language summary of the service, for the Service schema. */
+    serviceName: string;
+    serviceDescription: string;
+    /** Names of the two local methods, as a searcher would write them. */
+    methodNames: string[];
   };
 
   /** Labels that exist purely for assistive technology. */
@@ -116,6 +142,16 @@ export type SiteContent = {
     heading: string;
     body: string;
     items: { label: string; icon: IndustryIcon }[];
+  };
+
+  /**
+   * Long-tail question coverage. Rendered as native <details> so the answers sit
+   * in the DOM whether or not they are expanded, and emitted as FAQPage schema.
+   */
+  faq: {
+    heading: string;
+    body: string;
+    items: FaqItem[];
   };
 
   contact: {

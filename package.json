@@ -9,6 +9,9 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "seo": "node scripts/seo-audit.mjs",
+    "check-console": "node scripts/check-console.mjs",
+    "shots": "node scripts/screenshot.mjs",
     "assets": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-assets.ps1"
   },
   "dependencies": {

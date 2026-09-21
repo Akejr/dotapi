@@ -14,15 +14,34 @@ export const pt: SiteContent = {
     description:
       'A DOT é a maior plataforma de pagamentos digitais de Angola. Integre uma vez com a nossa API para aceitar Multicaixa Express e Referência Bancária de milhões de clientes angolanos, e receba na moeda que escolher.',
     keywords: [
-      'pagamentos Angola',
-      'gateway de pagamentos Angola',
-      'Multicaixa Express',
-      'Referência Bancária',
       'API de pagamentos Angola',
-      'liquidações globais',
-      'pagamentos transfronteiriços',
+      'gateway de pagamentos Angola',
+      'API Multicaixa Express',
+      'integração Multicaixa Express',
+      'Referência Bancária Angola',
+      'aceitar pagamentos em Angola',
       'vender em Angola',
+      'pagamentos transfronteiriços Angola',
+      'receber em EUR de Angola',
+      'métodos de pagamento Angola',
     ],
+  },
+
+  seo: {
+    home: {
+      title: 'API de Pagamentos Angola — Multicaixa Express | DOT',
+      description:
+        'Aceite Multicaixa Express e Referência Bancária de clientes angolanos através de uma só API e receba em EUR, USD ou BRL. Sem empresa local.',
+    },
+    documentation: {
+      title: 'Documentação da API de Pagamentos Angola | DOT',
+      description:
+        'Como integrar a API de pagamentos da DOT: chaves de teste, criação de pagamentos, webhooks e liquidações para o mercado angolano.',
+    },
+    serviceName: 'API de Pagamentos DOT para Angola',
+    serviceDescription:
+      'Processamento de pagamentos para empresas fora de Angola: aceite Multicaixa Express e Referência Bancária localmente através de uma só integração, com liquidação na moeda que escolher.',
+    methodNames: ['Multicaixa Express', 'Referência Bancária'],
   },
 
   a11y: {
@@ -178,6 +197,53 @@ export const pt: SiteContent = {
     ],
   },
 
+  faq: {
+    heading: 'Perguntas sobre aceitar pagamentos em Angola',
+    body: 'O que as equipas fora de Angola costumam perguntar antes de integrar.',
+    items: [
+      {
+        question: 'Como pode uma empresa fora de Angola aceitar pagamentos de clientes angolanos?',
+        answer:
+          'Através da API da DOT. Integra uma vez, os seus clientes pagam com os métodos locais que já usam — Multicaixa Express ou Referência Bancária — e a DOT liquida os fundos na moeda que escolher. Não precisa de registar empresa em Angola.',
+      },
+      {
+        question: 'O que é o Multicaixa Express?',
+        answer:
+          'O Multicaixa Express é a aplicação de pagamentos móveis usada em todo o país, construída sobre a rede Multicaixa de Angola. O cliente aprova o pagamento no telemóvel. É um dos dois métodos locais disponíveis na API da DOT.',
+      },
+      {
+        question: 'O que é um pagamento por Referência Bancária?',
+        answer:
+          'O cliente recebe um número de referência e paga-o através do seu banco — num ATM, ao balcão ou na aplicação bancária. É muito usado em Angola por clientes que preferem pagar a partir de uma conta bancária em vez de cartão ou aplicação.',
+      },
+      {
+        question: 'Preciso de uma empresa registada em Angola para usar a DOT?',
+        answer:
+          'Não. A DOT detém o licenciamento local e opera a infraestrutura local, pelo que pode vender para Angola como empresa estrangeira. A sua integração é com a API da DOT, e a liquidação chega-lhe no exterior.',
+      },
+      {
+        question: 'Em que moedas posso receber?',
+        answer:
+          'EUR, USD e BRL são suportadas, e outras moedas mediante pedido. Os seus clientes pagam em Kwanzas e você recebe na moeda que escolheu, pelo que não fica com saldo em Kwanzas nas suas contas.',
+      },
+      {
+        question: 'Posso testar a integração antes de entrar em produção?',
+        answer:
+          'Sim. O ambiente de teste espelha a produção, incluindo os fluxos de Multicaixa Express e Referência Bancária, para que os seus programadores façam um pagamento de ponta a ponta antes de existir dinheiro real.',
+      },
+      {
+        question: 'Como obtenho acesso à API?',
+        answer:
+          'Peça acesso nesta página. A equipa configura as suas credenciais de teste, partilha a documentação completa e acompanha os seus programadores na integração antes do arranque.',
+      },
+      {
+        question: 'Que tipos de negócio usam a DOT?',
+        answer:
+          'E-commerce, educação, streaming, SaaS, gaming e serviços digitais — qualquer empresa que venda a clientes angolanos e queira métodos de pagamento locais sem operação local.',
+      },
+    ],
+  },
+
   contact: {
     heading: 'Vamos crescer\njuntos',
     body: 'Fale-nos do seu negócio e a nossa equipa entrará em contacto para configurar o seu acesso à API e acompanhar o arranque em Angola.',
@@ -217,6 +283,7 @@ export const pt: SiteContent = {
     links: [
       { label: 'Produto', href: '#product' },
       { label: 'Documentação', href: '/documentation' },
+      { label: 'FAQ', href: '#faq' },
       { label: 'Contacto', href: '#contact' },
     ],
     legal: 'Todos os direitos reservados.',

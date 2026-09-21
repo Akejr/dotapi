@@ -14,15 +14,36 @@ export const en: SiteContent = {
     description:
       "DOT is Angola's largest digital payments platform. Connect once to our API to accept Multicaixa Express and Bank Reference from millions of Angolan customers, and settle globally in the currency you choose.",
     keywords: [
-      'Angola payments',
-      'Angola payment gateway',
-      'Multicaixa Express',
-      'Bank Reference',
       'Angola payments API',
-      'global settlements',
-      'cross-border payments',
+      'Angola payment gateway',
+      'Multicaixa Express API',
+      'Multicaixa Express integration',
+      'Bank Reference payment Angola',
+      'accept payments in Angola',
       'sell in Angola',
+      'cross-border payments Angola',
+      'settle in EUR from Angola',
+      'Angola payment methods',
     ],
+  },
+
+  seo: {
+    home: {
+      /* 53 chars. Leads with the query, keeps the brand as the tail. */
+      title: 'Angola Payments API — Multicaixa Express | DOT',
+      /* 141 chars. Names the methods, the settlement, and the main objection. */
+      description:
+        'Accept Multicaixa Express and Bank Reference from Angolan customers through one API, and settle in EUR, USD or BRL. No local entity needed.',
+    },
+    documentation: {
+      title: 'Payments API Documentation for Angola | DOT',
+      description:
+        'How to integrate the DOT payments API: sandbox keys, creating payments, webhooks and settlements for the Angolan market.',
+    },
+    serviceName: 'DOT Payments API for Angola',
+    serviceDescription:
+      'Payment processing for companies outside Angola: accept Multicaixa Express and Bank Reference locally through a single API integration, with settlement in the currency of your choice.',
+    methodNames: ['Multicaixa Express', 'Bank Reference'],
   },
 
   a11y: {
@@ -180,6 +201,53 @@ export const en: SiteContent = {
     ],
   },
 
+  faq: {
+    heading: 'Questions about accepting payments in Angola',
+    body: 'What teams outside Angola usually ask before they integrate.',
+    items: [
+      {
+        question: 'How can a company outside Angola accept payments from Angolan customers?',
+        answer:
+          'Through the DOT API. You integrate once, your customers pay with the local methods they already use — Multicaixa Express or a Bank Reference — and DOT settles the funds to you in the currency you choose. You do not need to register a company in Angola.',
+      },
+      {
+        question: 'What is Multicaixa Express?',
+        answer:
+          "Multicaixa Express is the mobile payment app used across Angola, built on the country's Multicaixa network. The customer approves the payment on their phone. It is one of the two local methods available through the DOT API.",
+      },
+      {
+        question: 'What is a Bank Reference payment?',
+        answer:
+          'The customer receives a reference number and pays it through their bank — at an ATM, at the counter or in their banking app. It is widely used in Angola by customers who prefer to pay from a bank account rather than with a card or an app.',
+      },
+      {
+        question: 'Do I need a company registered in Angola to use DOT?',
+        answer:
+          'No. DOT holds the local licensing and runs the local infrastructure, so you can sell into Angola as a foreign company. Your integration is with the DOT API, and settlement reaches you abroad.',
+      },
+      {
+        question: 'Which currencies can I settle in?',
+        answer:
+          'EUR, USD and BRL are supported, along with other currencies on request. Your customers pay in Kwanza and you receive in the currency you chose, so no Kwanza balance sits on your books.',
+      },
+      {
+        question: 'Can I test the integration before going live?',
+        answer:
+          'Yes. The sandbox mirrors production, including the Multicaixa Express and Bank Reference flows, so your developers can take a payment end to end before any real money moves.',
+      },
+      {
+        question: 'How do I get access to the API?',
+        answer:
+          'Request access from this page. The team sets up your sandbox credentials, shares the full documentation and walks your developers through the integration before you go live.',
+      },
+      {
+        question: 'What kinds of business use DOT?',
+        answer:
+          'E-commerce, education, streaming, SaaS, gaming and digital services — any company selling to Angolan customers that wants local payment methods without local operations.',
+      },
+    ],
+  },
+
   contact: {
     heading: "Let's grow\ntogether",
     body: 'Tell us about your business and our team will get in touch to set up your API access and walk you through going live in Angola.',
@@ -219,6 +287,7 @@ export const en: SiteContent = {
     links: [
       { label: 'Product', href: '#product' },
       { label: 'Documentation', href: '/documentation' },
+      { label: 'FAQ', href: '#faq' },
       { label: 'Contact', href: '#contact' },
     ],
     legal: 'All rights reserved.',

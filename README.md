@@ -30,6 +30,9 @@ npm run dev          # http://localhost:3000 → redirects to /en
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
+| `npm run seo` | SEO audit against a running server (see below) |
+| `npm run check-console` | Fail on any browser console error, incl. hydration |
+| `npm run shots` | Screenshot both locales at mobile, tablet and desktop |
 | `npm run assets` | Regenerate brand assets from `Novos assets/` (Windows only) |
 
 ## Internationalisation
@@ -47,6 +50,63 @@ English and Portuguese, route-based so each language has its own indexable URL.
 
 Components never import copy directly; the locale's content is passed down as a
 prop from `src/app/[locale]/`.
+
+## SEO
+
+The audience is companies outside Angola searching for how to accept Angolan
+payments, so the page is optimised for that intent rather than for the brand name.
+
+**Search-facing copy is separate from on-page copy.** `src/content/*.ts` has a
+`seo` block per locale. The hero says "Sell in Angola. Get paid globally." because
+that is brand voice; the `<title>` says "Angola Payments API — Multicaixa Express"
+because that is what gets typed into Google. Titles are budgeted to 60 characters
+and descriptions to 160 so neither is truncated in the result.
+
+**Long-tail coverage.** The FAQ section answers the eight questions foreign teams
+actually ask, using native `<details>` so the answers are in the DOM whether or
+not they are expanded, and is emitted as `FAQPage` structured data from the same
+source. Around 6,000 indexable words per locale.
+
+**One entity graph, not scattered snippets.** `src/lib/structured-data.ts` emits a
+single JSON-LD `@graph` per page with cross-referenced `@id`s, so the
+`Organization` publishing the `WebSite` is provably the same entity that provides
+the `Service` the page is about:
+
+| Page | Types |
+|---|---|
+| Home | `Organization` + `FinancialService`, `WebSite`, `Service` (with the two local methods as an `OfferCatalog`), `WebPage`, `FAQPage`, `ImageObject` |
+| Documentation | the same, plus `TechArticle` and `BreadcrumbList` |
+
+**Internationalisation signals.** Reciprocal `hreflang` for `en`, `pt-AO` and
+`x-default` in both the HTML and the sitemap, self-referencing canonicals, and
+`og:locale` / `alternateLocale` per page. `x-default` points at `/en` directly
+rather than at `/`, to avoid sending crawlers through a redirect.
+
+**Crawl hygiene.** `/` is a **308** permanent redirect to `/en` so signals
+consolidate on the target. `max-snippet: -1` and `max-image-preview: large` lift
+Google's default caps. Sitemap `lastmod` comes from `CONTENT_UPDATED_AT` in
+`src/lib/seo.ts` — bump it by hand when copy changes, because a lastmod that moves
+on every deploy teaches crawlers to ignore it.
+
+### Running the audit
+
+```bash
+npm run build && npm start &
+npm run seo -- http://localhost:3000
+```
+
+It fetches every page in every locale and fails on: missing or over-length titles
+and descriptions, `noindex`, a missing or non-self-referential canonical, an
+incomplete or non-reciprocal `hreflang` cluster, a missing or unreachable
+`og:image`, JSON-LD that does not parse or is missing an expected `@type`, more or
+fewer than one `h1`, images without `alt`, duplicate titles across pages, and
+pages absent from the sitemap.
+
+> It earns its keep. It caught `og:image` silently vanishing from all four pages:
+> Next's `generateMetadata` *replaces* the parent `openGraph` object instead of
+> deep-merging it, so a page that sets `openGraph` without images drops the card
+> inherited from the layout. Every page now builds its card through
+> `ogImages()` in `src/lib/seo.ts`, with an absolute URL.
 
 ## Brand assets
 

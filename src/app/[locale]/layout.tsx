@@ -2,11 +2,12 @@ import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { getContent, isLocale, localePath } from '@/content';
-import { locales, type Locale } from '@/content/types';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
+import { getContent, isLocale, localePath } from '@/content';
+import { locales, type Locale } from '@/content/types';
 import { brand } from '@/lib/brand';
+import { languageAlternates, pageRobots } from '@/lib/seo';
 import './globals.css';
 
 /* The geometric sans used in the DOT lockup. */
@@ -23,62 +24,59 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-/** hreflang map for every locale plus x-default. */
-function languageAlternates(path = '') {
-  const languages: Record<string, string> = {};
-  for (const locale of locales) {
-    languages[getContent(locale).meta.htmlLang] = `${localePath(locale, '/')}${path}`;
-  }
-  return languages;
-}
-
 export async function generateMetadata({ params }: LocaleParams): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
 
-  const { meta } = getContent(locale);
+  const { meta, seo } = getContent(locale);
 
   return {
     metadataBase: new URL(brand.url),
+    /* Child pages get "<their title> | DOT"; each page also sets an absolute
+       title where the length budget matters. */
     title: {
-      default: `${brand.name} — ${meta.tagline}`,
-      template: `%s — ${brand.name}`,
+      default: seo.home.title,
+      template: `%s | ${brand.name}`,
     },
-    description: meta.description,
+    description: seo.home.description,
     applicationName: brand.name,
+    category: 'finance',
     keywords: meta.keywords,
-    authors: [{ name: brand.name }],
+    authors: [{ name: brand.name, url: brand.url }],
+    creator: brand.name,
+    publisher: brand.name,
     alternates: {
       canonical: localePath(locale, '/'),
-      languages: { ...languageAlternates(), 'x-default': '/' },
+      languages: languageAlternates('/'),
     },
     openGraph: {
       type: 'website',
       url: localePath(locale, '/'),
       siteName: brand.name,
-      title: `${brand.name} — ${meta.tagline}`,
-      description: meta.description,
+      title: seo.home.title,
+      description: seo.home.description,
       locale: meta.ogLocale,
+      alternateLocale: locales
+        .filter((other) => other !== locale)
+        .map((other) => getContent(other).meta.ogLocale),
       images: [
         {
           url: '/images/og.png',
           width: 1200,
           height: 630,
           alt: `${brand.name} — ${meta.tagline}`,
+          type: 'image/png',
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${brand.name} — ${meta.tagline}`,
-      description: meta.description,
-      images: ['/images/og.png'],
+      title: seo.home.title,
+      description: seo.home.description,
+      images: [{ url: '/images/og.png', alt: `${brand.name} — ${meta.tagline}` }],
     },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
-    },
+    robots: pageRobots,
+    formatDetection: { telephone: false, address: false, email: false },
   };
 }
 
@@ -114,28 +112,10 @@ export default async function LocaleLayout({
   const locale: Locale = raw;
   const content = getContent(locale);
 
-  const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: brand.name,
-    legalName: brand.legalName,
-    url: brand.url,
-    description: content.meta.description,
-    logo: `${brand.url}/brand/dot-wordmark.png`,
-    slogan: content.meta.tagline,
-    areaServed: 'AO',
-    email: brand.contactEmail,
-    sameAs: brand.social.map((item) => item.href),
-  };
-
   return (
     <html lang={content.meta.htmlLang} className={poppins.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: REVEAL_BOOTSTRAP }} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
       </head>
       <body className="bg-paper-soft antialiased">
         <a
