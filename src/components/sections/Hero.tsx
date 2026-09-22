@@ -12,8 +12,9 @@ export function Hero({ locale, content }: { locale: Locale; content: SiteContent
 
   return (
     <section className="surface-ink relative isolate overflow-hidden pt-[104px] pb-16 sm:pt-[120px] lg:pt-[152px] lg:pb-16">
-      {/* Animated backdrop, mobile only. Carries the visual weight there, where
-          the payment-flow diagram is not shown. */}
+      {/* Animated backdrop. On mobile it carries the visual weight on its own,
+          since the flow diagram is not shown there; on desktop it is pulled back
+          and anchored behind the copy so the diagram stays the focal point. */}
       <HeroShader />
 
       <Container>

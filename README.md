@@ -128,16 +128,37 @@ survive the narrower column.
 - The currency flow diagram (`PaymentFlow`) is **desktop only**. Its section id
   was removed along with it, so the header's "How it works" points at
   `#product`, a link that exists at every breakpoint.
-- **Mobile only**, a WebGL noise field sits behind the hero:
+- A WebGL noise field sits behind the hero at every breakpoint:
   `src/components/ui/ShaderBackground.tsx`, mounted by
-  `src/components/sections/HeroShader.tsx` at `opacity-45` with `screen`
-  blending and a mask that fades it out before the fold ends.
+  `src/components/sections/HeroShader.tsx`.
 
-The gating is done in JS with `matchMedia`, not with `lg:hidden`, so desktop
-never creates a GL context at all. `prefers-reduced-motion` skips it entirely,
-the canvas is capped at 1.2 megapixels, and shader compile and link status are
-checked before the first frame. Pointer tracking was dropped from the original
-effect: a `pointermove` listener earns nothing on a touch device.
+Opacity and masking are the only things that differ between the two, and they
+live together in `.hero-shader` in `globals.css`:
+
+| | Opacity | Mask |
+|---|---|---|
+| Mobile | 45% | fades out towards the bottom |
+| Desktop (`lg`) | 34% | radial, anchored behind the copy column |
+
+Desktop pulls back for two reasons. The section is several times the area, so the
+same value reads much brighter across it, and the flow diagram's cards are
+translucent with only a `backdrop-blur` between them and this layer, so an
+unmasked field shows through their own backgrounds.
+
+The effect is composited with `mix-blend-mode: screen`, which drops the shader's
+black areas and lets only its blue filaments lift the navy. That is what makes it
+read as texture rather than as a video playing behind the copy.
+
+`prefers-reduced-motion` skips it entirely, and the check runs in JS rather than
+CSS so the browser never creates a GL context it would only hide. The drawing
+buffer is capped at 1.2 megapixels, because the fragment shader takes five noise
+samples per pixel and a full-width hero at `dpr` 2 would otherwise ask for around
+4M pixels a frame. Compile and link status are checked before the first frame, so
+a driver that rejects the program leaves the hero untouched instead of painting a
+black rectangle over it. Frames pause when the tab is hidden or the hero scrolls
+out of view. Pointer tracking was dropped from the source effect: half the
+audience has no cursor to drive it, and a backdrop that chases the pointer
+competes with the copy in front of it.
 
 Adapted from [Paper Shaders](https://github.com/paper-design/shaders)
 (Apache-2.0).
@@ -196,7 +217,11 @@ Upstash, Vercel KV) before relying on it across multiple instances.
 ## Accessibility and verification
 
 `scripts/check-console.mjs` loads pages in headless Chromium and fails on any
-console error or warning, which is how hydration mismatches get caught.
+console error or warning, which is how hydration mismatches get caught. Its
+`IGNORED` list drops messages about the harness rather than the page: headless
+Chromium has no GPU, so it falls back to SwiftShader for the hero shader and says
+so on every run. A failed shader compile or link reports differently and still
+fails the check.
 `scripts/screenshot.mjs` captures both locales at mobile, tablet and desktop.
 
 ```bash

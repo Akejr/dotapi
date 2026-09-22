@@ -8,9 +8,10 @@
  * Zero dependencies: one WebGL canvas that fills its parent.
  *
  * Adapted for this project:
- *  - Cursor interaction removed. It is a decorative background behind the mobile
- *    hero, and the original wired pointermove plus a capturing scroll listener on
- *    window, which is work we do not want on a touch device that has no cursor.
+ *  - Cursor interaction removed. It is a decorative background behind the hero,
+ *    and the original wired pointermove plus a capturing scroll listener on
+ *    window. That is work half our visitors have no cursor to trigger, and a
+ *    backdrop that chases the pointer competes with the copy in front of it.
  *  - Shader compilation and link status are checked, so a driver that rejects the
  *    program leaves the hero untouched instead of painting a black rectangle over
  *    it.
@@ -404,8 +405,11 @@ export function ShaderBackground({ className }: { className?: string }) {
     const start = performance.now();
 
     const resizeCanvas = () => {
-      /* Cap the device pixel ratio and the total pixel count: this is a
-         decorative layer, and a phone does not need to shade 4M pixels for it. */
+      /* Cap the device pixel ratio and the total pixel count. The fragment shader
+         takes five noise samples per pixel, so cost scales straight with area:
+         a full-width desktop hero at dpr 2 would ask for roughly 4M pixels a
+         frame. Capped, it shades 1.2M and the difference is invisible through a
+         34% screen blend. */
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rawWidth = Math.max(1, Math.round(bounds.width * dpr));
       const rawHeight = Math.max(1, Math.round(bounds.height * dpr));

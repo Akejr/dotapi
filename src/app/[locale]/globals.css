@@ -257,6 +257,46 @@
 }
 
 /* ==========================================================================
+   Hero backdrop — the WebGL noise field behind the hero copy.
+
+   `screen` keeps the shader's black areas invisible and lets only its blue
+   filaments lift the navy, which is what makes it read as texture rather than a
+   video playing behind the copy. The masks fade it out before the section
+   boundary so it never collides with the section below.
+   ========================================================================== */
+@layer components {
+  .hero-shader {
+    /* 45%: enough to read as movement, low enough that white/75 body copy keeps
+       its contrast where the filaments are brightest. */
+    opacity: 0.45;
+    mix-blend-mode: screen;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%);
+  }
+
+  /*
+   * Desktop gets the same effect, but it has to share the section with the flow
+   * diagram. So the field is anchored behind the copy column and falls off
+   * towards the right: those cards are translucent with only a `backdrop-blur`
+   * between them and this layer, and would otherwise pick the noise up through
+   * their own backgrounds. Lower opacity too, because the desktop hero shows
+   * several times the area and the same value reads much brighter across it.
+   */
+  @media (width >= 64rem) {
+    .hero-shader {
+      opacity: 0.34;
+      -webkit-mask-image: radial-gradient(
+        115% 130% at 20% 16%,
+        #000 0%,
+        #000 40%,
+        transparent 86%
+      );
+      mask-image: radial-gradient(115% 130% at 20% 16%, #000 0%, #000 40%, transparent 86%);
+    }
+  }
+}
+
+/* ==========================================================================
    Scroll reveal — opt-in, driven by IntersectionObserver in <Reveal />.
    Content is visible by default so it never depends on JS to be readable.
    ========================================================================== */
